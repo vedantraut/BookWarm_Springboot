@@ -33,7 +33,7 @@ public class BookController {
 		
 		Book b = bookservice.saveBook(bookdto);
 		
-		bookdto.setId(b.getId());
+		bookdto.setId(b.getBookId());
 		
 		return ResponseEntity.ok(bookdto);
 	}
@@ -76,4 +76,12 @@ public class BookController {
 		bookservice.updateBook(bookdto);
 		return  ResponseEntity.ok(bookdto);
 	} 
+	
+	@GetMapping("/sort")
+	public ResponseEntity<List<Book>> sortBooks(@RequestParam String sortBy, @RequestParam String order) {
+		
+		List<Book> books = bookservice.sortBooks(sortBy, order);
+	
+		return ResponseEntity.ok(books);
+	}
 }

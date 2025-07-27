@@ -1,5 +1,6 @@
 package com.vedantraut.bookwarm.services;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,5 +78,28 @@ public class BookService {
 		
 		
 		return bookrepo.save(existingBook);
+	}
+
+	public List<Book> sortBooks(String sortBy, String order) {
+		
+		List<Book> allBooks = bookrepo.findAll();
+		
+		System.out.println("Before Sorting allBooks by -> "+sortBy);
+		
+		Comparator<Book> comparator = switch(sortBy) {
+			case "title" -> Comparator.comparing(Book::getTitle);
+			case "price" -> Comparator.comparing(Book::getPrice);
+			default -> throw new IllegalArgumentException("Invalid Sort Field!"); 
+		};
+		
+		if(order.equalsIgnoreCase("desc")) {
+			comparator = comparator.reversed();
+		}
+		
+		allBooks.sort(comparator);
+		
+		System.out.println("After Sorting allBooks by -> "+sortBy);
+		
+		return allBooks;
 	}
 }
