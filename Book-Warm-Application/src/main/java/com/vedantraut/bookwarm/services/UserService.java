@@ -3,6 +3,7 @@ package com.vedantraut.bookwarm.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.vedantraut.bookwarm.dtos.UserDTO;
@@ -18,6 +19,9 @@ public class UserService {
 	
 	@Autowired
 	UserRepository userrepository;
+	
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
 
 	public String registerUser(UserDTO userdto) {
 		
@@ -30,8 +34,12 @@ public class UserService {
 		Users user = new Users();
 		
 		user.setUserName(userdto.getUserName());
-		user.setPassword(userdto.getPassword()); // Encryption pending
 		user.setEmail(userdto.getEmail());
+//		user.setPassword(userdto.getPassword()); // Without Encryption 
+		
+		System.out.println("Encrypted Password - "+passwordEncoder.encode(userdto.getPassword()));
+		
+		user.setPassword(passwordEncoder.encode(userdto.getPassword())); // Encrypting the password
 		
 		userrepository.save(user);
 		
@@ -45,9 +53,13 @@ public class UserService {
 					  .orElseThrow(() -> new UserNotFoundException("User Not Found"));
 					  
 		
-		if(!user.getPassword().equals(password)) {
+		if(!passwordEncoder.matches(password, user.getPassword())) {
 			throw new RuntimeException("Invalid Password!");
 		}
+		
+//		if(!user.getPassword().equals(password)) {
+//			throw new RuntimeException("Invalid Password!");
+//		}
 		
 		
 		return "Access Success!";
