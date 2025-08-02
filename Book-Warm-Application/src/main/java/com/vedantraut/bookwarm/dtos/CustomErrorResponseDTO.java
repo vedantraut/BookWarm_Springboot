@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomErrorResponse {
+public class CustomErrorResponseDTO {
 	private int status;
     private String error;
 	private String message;

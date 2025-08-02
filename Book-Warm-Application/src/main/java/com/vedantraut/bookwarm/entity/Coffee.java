@@ -29,6 +29,6 @@ public class Coffee {
 	@Min(value=20, message = "Coffee price must be at least ₹20")
 	private double price;
 	
-	@Size(min=10, max=100, message="Please enter the description of coffee within 10-100 chars!")
+	@Size(min=10, max=1000, message="Please enter the description of coffee within 10-1000 chars!")
 	private String description;
 }

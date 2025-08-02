@@ -10,13 +10,13 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-import com.vedantraut.bookwarm.dtos.CustomErrorResponse;
+import com.vedantraut.bookwarm.dtos.CustomErrorResponseDTO;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<CustomErrorResponse> handleValidationException(MethodArgumentNotValidException ex, WebRequest request){
+	public ResponseEntity<CustomErrorResponseDTO> handleValidationException(MethodArgumentNotValidException ex, WebRequest request){
 		
 		System.out.println("Custom Exception Method of MethodArgumentNotValidException invoked!!");
 		
@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
 			fieldErrors.put(error.getField(),error.getDefaultMessage());
 		});
 		
-		CustomErrorResponse err = new CustomErrorResponse(
+		CustomErrorResponseDTO err = new CustomErrorResponseDTO(
 				status.value(),
 				status.getReasonPhrase(),
 				ex.getMessage(),
@@ -38,14 +38,14 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(err, status);
 	}
 	
-	@ExceptionHandler({AuthorNotFoundException.class,BookNotFoundException.class})
-	public ResponseEntity<CustomErrorResponse> handleAuthorBookNotFoundException(Exception ex, WebRequest request) {
+	@ExceptionHandler({AuthorNotFoundException.class,BookNotFoundException.class, CoffeeNotFoundException.class})
+	public ResponseEntity<CustomErrorResponseDTO> handleAuthorBookNotFoundException(Exception ex, WebRequest request) {
 		
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		
 		System.out.println("Common Exception Handler of Author and Book Not Found is invoked!");
 		
-		CustomErrorResponse err = new CustomErrorResponse(
+		CustomErrorResponseDTO err = new CustomErrorResponseDTO(
 				status.value(),
 				status.getReasonPhrase(),
 				ex.getMessage(),
@@ -57,12 +57,12 @@ public class GlobalExceptionHandler {
 	}
 	
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<CustomErrorResponse> handleAllExceptions(Exception ex, WebRequest request){
+	public ResponseEntity<CustomErrorResponseDTO> handleAllExceptions(Exception ex, WebRequest request){
 		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 		
 		System.out.println("Common Exception Handler is invoked!");
 		
-		CustomErrorResponse err = new CustomErrorResponse(
+		CustomErrorResponseDTO err = new CustomErrorResponseDTO(
 				status.value(),
 				status.getReasonPhrase(),
 				ex.getMessage(),
@@ -75,11 +75,11 @@ public class GlobalExceptionHandler {
 	
 	
 //	@ExceptionHandler(BookNotFoundException.class)
-//	public ResponseEntity<CustomErrorResponse> handleBookNotFoundException(Exception ex) {
+//	public ResponseEntity<CustomErrorResponseDTO> handleBookNotFoundException(Exception ex) {
 //		
 //		HttpStatus status = HttpStatus.NOT_FOUND;
 //		
-//		CustomErrorResponse err = new CustomErrorResponse(
+//		CustomErrorResponseDTO err = new CustomErrorResponseDTO(
 //				status.value(),
 //				status.getReasonPhrase(),
 //				ex.getMessage(),
