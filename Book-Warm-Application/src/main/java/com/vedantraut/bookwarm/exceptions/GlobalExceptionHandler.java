@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(err, status);
 	}
 	
-	@ExceptionHandler({AuthorNotFoundException.class,BookNotFoundException.class, CoffeeNotFoundException.class})
+	@ExceptionHandler({AuthorNotFoundException.class,BookNotFoundException.class, CoffeeNotFoundException.class, UserExistsException.class})
 	public ResponseEntity<CustomErrorResponseDTO> handleAuthorBookNotFoundException(Exception ex, WebRequest request) {
 		
 		HttpStatus status = HttpStatus.NOT_FOUND;
