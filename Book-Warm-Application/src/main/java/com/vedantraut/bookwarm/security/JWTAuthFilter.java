@@ -25,6 +25,21 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 	
 	@Autowired
 	JWTService jwtservice;
+	
+	/**
+	 * What does doFilterInternal is doing?
+	 * 
+	→ [User sends request with JWT] 
+	 → Filter sees Authorization header →
+	   → Extracts token →
+	     → Extracts email from token →
+	       → Loads user from DB →
+	         → Validates token again →
+	           → Creates auth object →
+	             → Sets into SecurityContext →
+	               → Request goes to Controller ✅
+	 */
+	
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, 
@@ -32,7 +47,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 									FilterChain filterChain)
 			throws ServletException, IOException {
 		
-		final String authHeader = request.getHeader("Authorization");
+		final String authHeader = request.getHeader("Authorization"); // Filter sees Authorization header
 		final String token;
 		final String userEmail;
 		
@@ -42,19 +57,23 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 			return;
 		}
 		
-		token = authHeader.substring(7); // Skip "Bearer "
-		userEmail = jwtservice.extractUsername(token);
+		token = authHeader.substring(7); // Skip "Bearer " // Extracts token
+		userEmail = jwtservice.extractUsername(token); // Extracts email from token
 		
 		if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null ) {
-			UserDetails userdetails = userDetailsService.loadUserByUsername(userEmail);
+			UserDetails userdetails = userDetailsService.loadUserByUsername(userEmail); // Loads user from DB
 			
+			// Validates token again
 			if(jwtservice.isTokenValid(token, userdetails.getUsername())) {
+				
+				// Creates auth object
 				UsernamePasswordAuthenticationToken authToken = 
 						new UsernamePasswordAuthenticationToken(userdetails, null, userdetails.getAuthorities());
 				
 				authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+				
+				// Sets the user as authenticated and marks user as logged in
+                SecurityContextHolder.getContext().setAuthentication(authToken); // Sets into SecurityContext
 			}
 		}
 		

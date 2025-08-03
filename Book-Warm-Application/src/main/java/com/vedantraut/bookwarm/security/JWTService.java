@@ -72,7 +72,7 @@ public class JWTService {
         return (extractedUsername.equals(username)) && !isTokenExpired(token);
     }
 
-    // Check expiry
+    // Check expiry of the token
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
