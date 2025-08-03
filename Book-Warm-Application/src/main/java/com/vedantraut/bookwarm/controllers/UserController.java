@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.vedantraut.bookwarm.dtos.AuthenticationRequest;
+import com.vedantraut.bookwarm.dtos.AuthenticationResponse;
 import com.vedantraut.bookwarm.dtos.AuthorDTO;
 import com.vedantraut.bookwarm.dtos.UserDTO;
 import com.vedantraut.bookwarm.entity.Author;
+import com.vedantraut.bookwarm.services.AuthenticationService;
 import com.vedantraut.bookwarm.services.AuthorService;
 import com.vedantraut.bookwarm.services.UserService;
 
@@ -28,6 +31,9 @@ public class UserController {
 	
 	@Autowired
 	UserService userservice;
+
+	@Autowired
+	AuthenticationService authservice;
 	
 	@PostMapping("/register")
 	public ResponseEntity<String> registerUser(@RequestBody @Valid UserDTO userdto) {
@@ -37,9 +43,16 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<String> loginUser(@RequestParam String email, @RequestParam String password) {
-		String responseMsg = userservice.loginUser(email, password);
+	public ResponseEntity<AuthenticationResponse> loginUser(@RequestBody AuthenticationRequest request) {
+		AuthenticationResponse responseMsg = authservice.loginUser(request);
 		
 		return ResponseEntity.ok(responseMsg);
 	}
+	
+//	@PostMapping("/login")
+//	public ResponseEntity<String> loginUser(@RequestParam String email, @RequestParam String password) {
+//		String responseMsg = userservice.loginUser(email, password);
+//		
+//		return ResponseEntity.ok(responseMsg);
+//	}
 }
