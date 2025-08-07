@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
@@ -18,7 +19,10 @@ import io.jsonwebtoken.security.Keys;
 public class JWTService {
 	
 	// Secret Key For Development
-	private static final String SECRET_KEY = "7345762A313F4428472B4B6250655368566D5970337336763979244226452948"; // 256-bit key (32-byte hex)
+//	private static final String SECRET_KEY = "7345762A313F4428472B4B6250655368566D5970337336763979244226452948"; // 256-bit key (32-byte hex)
+	
+	@Value("${jwt.secret}")
+	public String SECRET_KEY;
 	
 	// Generate token
 	public String generateToken(String username) {

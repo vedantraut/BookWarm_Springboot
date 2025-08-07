@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.vedantraut.bookwarm.security.JWTAuthFilter;
 
@@ -32,11 +34,12 @@ public class AppConfig {
 ////				.anyRequest().permitAll()
 //			);
 		
+		// Adds JWT Authentication for all the APIS excluding login and register
 		http.csrf(csrf -> csrf.disable())
-			.authorizeHttpRequests(auth -> auth
-				.requestMatchers("/api/users/login", "/api/users/register").permitAll()
-				.anyRequest().authenticated()
-			)
+//			.authorizeHttpRequests(auth -> auth
+//				.requestMatchers("/api/users/login", "/api/users/register").permitAll()
+//				.anyRequest().authenticated()
+//			)
 			.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 //			.build();
 		
@@ -47,5 +50,20 @@ public class AppConfig {
 	@Bean
 	public AuthenticationManager authManager(AuthenticationConfiguration config) throws Exception {
 		return config.getAuthenticationManager();
+	}
+	
+	@Bean
+	public WebMvcConfigurer CorsConfigurer() {
+		
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**")
+						.allowedOrigins("http://localhost:4200")
+						.allowedMethods("*")
+						.allowedHeaders("*");
+			}
+		};
+		
 	}
 }
