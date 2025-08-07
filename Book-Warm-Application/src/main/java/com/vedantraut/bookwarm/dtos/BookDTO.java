@@ -21,5 +21,8 @@ public class BookDTO {
     
     @Min(value=100, message = "Book price must be at least ₹100")
     private Double price;
+    
+    private String imageUrl;
     private Long author_id;
+    private String authorName;
 }

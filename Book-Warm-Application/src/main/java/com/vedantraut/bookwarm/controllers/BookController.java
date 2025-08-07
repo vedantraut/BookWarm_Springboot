@@ -1,5 +1,6 @@
 package com.vedantraut.bookwarm.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +40,11 @@ public class BookController {
 	}
 	
 	@GetMapping("/getAllBooks")
-	public ResponseEntity<List<Book>> getAllBooks() {
+	public ResponseEntity<List<BookDTO>> getAllBooks() {
 		
-		List<Book> b = bookservice.getAllBooks();
+		List<BookDTO> books = bookservice.getAllBooks();
 		
-		return ResponseEntity.ok(b);
+		return ResponseEntity.ok(books);
 	}
 	
 	@GetMapping("/getBook")

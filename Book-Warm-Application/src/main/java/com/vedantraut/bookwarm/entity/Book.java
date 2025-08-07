@@ -33,6 +33,8 @@ public class Book {
 	@Min(value=100, message = "Book price must be at least ₹100")
 	private double price;
 	
+	private String imageUrl;
+	
 	@ManyToOne()
 	@JoinColumn(name="author_id")
 //	@JsonManagedReference

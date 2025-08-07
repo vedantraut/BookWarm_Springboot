@@ -1,5 +1,6 @@
 package com.vedantraut.bookwarm.services;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -25,8 +26,27 @@ public class BookService {
 	@Autowired
 	private AuthorRepository authorrepo;
 	
-	public List<Book> getAllBooks() {
-		return bookrepo.findAll();
+	public List<BookDTO> getAllBooks() {
+		List<Book> books = bookrepo.findAll();
+		
+		List<BookDTO> bookdtos = new ArrayList<>();
+		
+		for(Book book: books) {		
+			BookDTO bookdto = new BookDTO();
+			
+			bookdto.setId(book.getBookId());
+			bookdto.setIsbn(book.getIsbn());
+			bookdto.setPrice(book.getPrice());
+			bookdto.setTitle(book.getTitle());
+			bookdto.setImageUrl(book.getImageUrl());
+			bookdto.setAuthor_id(book.getAuthor().getAuthorId());
+			bookdto.setAuthorName(book.getAuthor().getName());
+			
+			bookdtos.add(bookdto);
+		}
+		System.out.println("BookDTOS --" + bookdtos);
+		
+		return bookdtos;
 	}
 	
 	public Book getBookById(Long id) {
@@ -52,6 +72,7 @@ public class BookService {
 		newbook.setTitle(bookdto.getTitle());
 		newbook.setPrice(bookdto.getPrice());
 		newbook.setIsbn(bookdto.getIsbn());
+		newbook.setImageUrl(bookdto.getImageUrl());
 		
 		Author author = authorrepo.findById(bookdto.getAuthor_id())
 				.orElseThrow(() -> new AuthorNotFoundException("Author not found"));
