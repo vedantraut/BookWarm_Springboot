@@ -24,4 +24,6 @@ public class CoffeeDTO {
 	
 	@Size(min=10, max=1000, message="Please enter the description of coffee within 10-1000 chars!")
 	private String description;
+	
+	private String imageUrl;
 }

@@ -30,11 +30,11 @@ public class CoffeeController {
 	private CoffeeService coffeeservice;
 
 	@GetMapping("/getAllCoffees")
-	public ResponseEntity<List<Coffee>> getAllCoffees(){
+	public ResponseEntity<List<CoffeeDTO>> getAllCoffees(){
 		
-		List<Coffee> fetchAllCoffee = coffeeservice.fetchAllCoffee();
+		List<CoffeeDTO> allcoffees = coffeeservice.fetchAllCoffee();
 		
-		return ResponseEntity.ok(fetchAllCoffee);
+		return ResponseEntity.ok(allcoffees);
 	}
 	
 	@GetMapping("/getCoffee")

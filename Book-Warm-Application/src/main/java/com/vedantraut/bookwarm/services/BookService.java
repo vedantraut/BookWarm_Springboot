@@ -91,6 +91,7 @@ public class BookService {
 		existingBook.setTitle(bookdto.getTitle());
 		existingBook.setPrice(bookdto.getPrice());
 		existingBook.setIsbn(bookdto.getIsbn());
+		existingBook.setImageUrl(bookdto.getImageUrl());
 		
 		Author author = authorrepo.findById(bookdto.getAuthor_id())
 				.orElseThrow(() -> new RuntimeException("Author not found"));
