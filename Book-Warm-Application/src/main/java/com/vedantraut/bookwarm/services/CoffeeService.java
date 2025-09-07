@@ -23,7 +23,6 @@ public class CoffeeService {
 	public List<CoffeeDTO> fetchAllCoffee() {
 		List<Coffee> coffees=  coffeerepository.findAll();
 		
-		
 		List<CoffeeDTO> coffeedtos=  new ArrayList<>();
 		
 		for(Coffee coffee: coffees) {

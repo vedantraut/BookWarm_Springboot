@@ -48,9 +48,11 @@ public class BookController {
 	}
 	
 	@GetMapping("/getBook")
-	public ResponseEntity<Book> getBookById(@RequestParam Long id) {
+	public ResponseEntity<BookDTO> getBookById(@RequestParam(required=false) Long id, @RequestParam(required=false) String title, 
+			@RequestParam(required=false) String authorName, @RequestParam(required=false) Double price) {
 		
-		Book b = bookservice.getBookById(id);
+		
+		BookDTO b = bookservice.getBookById(id);
 		
 		if (b == null) {
 			System.out.println("Book at id - "+id+" not found...");

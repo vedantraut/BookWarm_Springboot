@@ -49,14 +49,23 @@ public class BookService {
 		return bookdtos;
 	}
 	
-	public Book getBookById(Long id) {
+	public BookDTO getBookById(Long id) {
 		
 		System.out.println("Finding book by id - "+id);
 		
 		Book book = bookrepo.findById(id)
 					.orElseThrow(() -> new BookNotFoundException("Book not found with id - "+id));
 		
-		return book;
+		BookDTO bookdto = new BookDTO();
+		
+		bookdto.setId(id);
+		bookdto.setTitle(book.getTitle());
+		bookdto.setImageUrl(book.getImageUrl());
+		bookdto.setIsbn(book.getIsbn());
+		bookdto.setPrice(book.getPrice());
+		bookdto.setAuthorName(book.getAuthor().getName());
+		
+		return bookdto;
 	}
 	
 	public void deleteBook(Long id) {
