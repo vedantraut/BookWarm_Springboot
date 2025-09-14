@@ -58,10 +58,20 @@ public class CoffeeService {
 		
 	}
 
-	public Coffee fetchCoffeeById(Long id) {
+	public CoffeeDTO fetchCoffeeById(Long id) {
 		Coffee coffee = coffeerepository.findById(id)
 						.orElseThrow(() -> new CoffeeNotFoundException("Coffee not found"));
-		return coffee;
+		
+		CoffeeDTO coffeedto = new CoffeeDTO();
+		
+		coffeedto.setCoffeeId(id);
+		coffeedto.setCoffeeType(coffee.getCoffeeType());
+		coffeedto.setDescription(coffee.getDescription());
+		coffeedto.setImageUrl(coffee.getImageUrl());
+		coffeedto.setName(coffee.getName());
+		coffeedto.setPrice(coffeedto.getPrice());
+		
+		return coffeedto;
 	}
 
 	public String deleteCoffee(Long id) {

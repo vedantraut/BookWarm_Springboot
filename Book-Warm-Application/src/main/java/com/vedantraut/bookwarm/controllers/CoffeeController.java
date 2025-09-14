@@ -38,9 +38,9 @@ public class CoffeeController {
 	}
 	
 	@GetMapping("/getCoffee")
-	public ResponseEntity<Coffee> getCoffeeById(@RequestParam Long id){
+	public ResponseEntity<CoffeeDTO> getCoffeeById(@RequestParam Long id){
 		
-		Coffee coffee = coffeeservice.fetchCoffeeById(id);
+		CoffeeDTO coffee = coffeeservice.fetchCoffeeById(id);
 		
 		if(coffee == null) {
 			System.out.println("Coffee at id - "+id+" not found...");
