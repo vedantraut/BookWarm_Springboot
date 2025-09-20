@@ -36,6 +36,7 @@ public class UserService {
 		user.setUserName(userdto.getUserName());
 		user.setEmail(userdto.getEmail());
 //		user.setPassword(userdto.getPassword()); // Without Encryption 
+		user.setRole(userdto.getRole());;
 		
 		System.out.println("Encrypted Password - "+passwordEncoder.encode(userdto.getPassword()));
 		

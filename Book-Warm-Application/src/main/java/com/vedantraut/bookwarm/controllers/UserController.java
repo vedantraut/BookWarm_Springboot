@@ -1,6 +1,8 @@
 package com.vedantraut.bookwarm.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,10 +38,14 @@ public class UserController {
 	AuthenticationService authservice;
 	
 	@PostMapping("/register")
-	public ResponseEntity<String> registerUser(@RequestBody @Valid UserDTO userdto) {
+	public ResponseEntity<Map<String, String>> registerUser(@RequestBody @Valid UserDTO userdto) {
 		String responseMsg = userservice.registerUser(userdto);
 		
-		return ResponseEntity.ok(responseMsg);
+		Map<String, String> response = new HashMap<>();
+		
+		response.put("message", responseMsg);
+		
+		return ResponseEntity.ok(response);
 	}
 	
 	@PostMapping("/login")

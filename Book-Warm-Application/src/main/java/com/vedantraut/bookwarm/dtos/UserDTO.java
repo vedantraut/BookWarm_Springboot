@@ -25,4 +25,7 @@ public class UserDTO {
 	
 	@Email(message="Please Enter Valid Email!")
 	private String email;
+	
+	@NotNull(message="Role cannot be null!")
+	private String role;
 }

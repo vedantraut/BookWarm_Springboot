@@ -35,5 +35,8 @@ public class Users {
 	@Column(unique = true)
 	private String email;
 	
+	@NotNull(message="Role cannot be null!")
+	private String role;
+	
 //	private List<Orders> orders;
 }
