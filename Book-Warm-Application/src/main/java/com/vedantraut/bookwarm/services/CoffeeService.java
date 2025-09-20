@@ -69,7 +69,7 @@ public class CoffeeService {
 		coffeedto.setDescription(coffee.getDescription());
 		coffeedto.setImageUrl(coffee.getImageUrl());
 		coffeedto.setName(coffee.getName());
-		coffeedto.setPrice(coffeedto.getPrice());
+		coffeedto.setPrice(coffee.getPrice());
 		
 		return coffeedto;
 	}

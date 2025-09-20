@@ -37,14 +37,22 @@ public class OrderService {
 			Book book = bookrepository.findById(orderdto.getBookId())
 						.orElseThrow(()-> new BookNotFoundException("Book Not Found with id - "+orderdto.getBookId()));
 			
-			Coffee coffee = coffeerepository.findById(orderdto.getCoffeeId())
-					.orElseThrow(()-> new CoffeeNotFoundException("Coffee Not Found with id - "+orderdto.getCoffeeId()));
+			// Check in db only when coffee is bought --- coffeeId = -1 means coffee is not bought
+			Coffee coffee = null;
+			if(orderdto.getCoffeeId() != -1) {				
+				coffee = coffeerepository.findById(orderdto.getCoffeeId())
+						.orElseThrow(()-> new CoffeeNotFoundException("Coffee Not Found with id - "+orderdto.getCoffeeId()));
+			}
+			
 			
 			Orders order = new Orders();
 			
 			order.setBook(book);
 			order.setCoffee(coffee);
-			order.setTotalPrice(book.getPrice() + coffee.getPrice());
+			
+			Double totalPrice = (book.getPrice() + (coffee != null ? coffee.getPrice(): 0));
+//			order.setTotalPrice(book.getPrice() + coffee.getPrice());
+			order.setTotalPrice(totalPrice);
 			order.setOrderTime(LocalDateTime.now());
 			
 			orderrepository.save(order);
