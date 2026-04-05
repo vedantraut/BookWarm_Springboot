@@ -1,11 +1,13 @@
 package com.vedantraut.bookwarm.services;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vedantraut.bookwarm.dtos.OrderDTO;
+import com.vedantraut.bookwarm.dtos.OrderHistoryDTO;
 import com.vedantraut.bookwarm.dtos.ResponseDTO;
 import com.vedantraut.bookwarm.entity.Book;
 import com.vedantraut.bookwarm.entity.Coffee;
@@ -49,6 +51,7 @@ public class OrderService {
 			
 			order.setBook(book);
 			order.setCoffee(coffee);
+			order.setUserId(orderdto.getUserId());
 			
 			Double totalPrice = (book.getPrice() + (coffee != null ? coffee.getPrice(): 0));
 //			order.setTotalPrice(book.getPrice() + coffee.getPrice());
@@ -73,6 +76,27 @@ public class OrderService {
 		}
 
 		
+	}
+
+	public List<OrderHistoryDTO> getByOrderId(Long userId) {
+		
+		List<Orders> orders = orderrepository.findByUserId(userId);
+		
+		List<OrderHistoryDTO> orderdtoList = orders.stream().map(order -> new OrderHistoryDTO(
+					order.getOrderId(),
+					order.getBook().getTitle(),
+					getCoffeeName(order.getCoffee()),
+					order.getOrderTime()
+				)).toList();
+		
+		System.out.println("orderdtoList ---> "+orderdtoList);
+		
+		return orderdtoList;
+	}
+
+	private String getCoffeeName(Coffee coffee) {
+		
+		return coffee == null ? "-1" : coffee.getName();
 	}
 	
 }

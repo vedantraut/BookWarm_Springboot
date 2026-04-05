@@ -31,6 +31,7 @@ public class Orders {
 	private Coffee coffee;
 	
 	private Double TotalPrice;
+	private Long userId;
 	private LocalDateTime orderTime;
 	
 }

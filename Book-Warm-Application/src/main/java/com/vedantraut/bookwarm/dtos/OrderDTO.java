@@ -16,6 +16,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OrderDTO {
 	
+	@NotNull(message = "User ID is required")
+	private Long userId;
+	
 	@NotNull(message = "Book ID is required")
 	private Long bookId;
 	
