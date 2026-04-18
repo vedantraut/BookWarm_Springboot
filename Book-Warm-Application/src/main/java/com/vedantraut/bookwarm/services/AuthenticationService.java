@@ -45,7 +45,8 @@ public class AuthenticationService {
 //		}
 		
 		String token = jwtservice.generateToken(user.getEmail());
+		long userId = user.getUserId();
 		
-		return new AuthenticationResponse(token, "Login Successful!");
+		return new AuthenticationResponse(userId, token, "Login Successful!");
 	}
 }

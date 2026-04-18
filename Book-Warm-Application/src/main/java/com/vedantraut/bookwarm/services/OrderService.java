@@ -24,10 +24,6 @@ public class OrderService {
 	
 	@Autowired
 	private BookRepository bookrepository;
-	
-	@Autowired
-	private AuthorRepository authorrepository;
-	
 	@Autowired
 	private CoffeeRepository coffeerepository;
 	@Autowired
