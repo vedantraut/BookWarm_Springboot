@@ -2,17 +2,12 @@ package com.vedantraut.bookwarm.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.vedantraut.bookwarm.dtos.CoffeeDTO;
 import com.vedantraut.bookwarm.entity.Coffee;
 import com.vedantraut.bookwarm.exceptions.CoffeeNotFoundException;
 import com.vedantraut.bookwarm.repository.CoffeeRepository;
-
-import jakarta.validation.Valid;
 
 @Service
 public class CoffeeService {

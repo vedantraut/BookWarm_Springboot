@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 public class OrderHistoryDTO {
 	private Long orderId;
 	private String bookName;
+	private String imageUrl;
 	private String coffee;
+	private Double totalPrice;
 	private LocalDateTime orderDate;
+	
 }

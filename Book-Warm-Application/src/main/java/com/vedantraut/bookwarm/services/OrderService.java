@@ -14,7 +14,7 @@ import com.vedantraut.bookwarm.entity.Coffee;
 import com.vedantraut.bookwarm.entity.Orders;
 import com.vedantraut.bookwarm.exceptions.BookNotFoundException;
 import com.vedantraut.bookwarm.exceptions.CoffeeNotFoundException;
-import com.vedantraut.bookwarm.repository.AuthorRepository;
+
 import com.vedantraut.bookwarm.repository.BookRepository;
 import com.vedantraut.bookwarm.repository.CoffeeRepository;
 import com.vedantraut.bookwarm.repository.OrderRepository;
@@ -81,7 +81,9 @@ public class OrderService {
 		List<OrderHistoryDTO> orderdtoList = orders.stream().map(order -> new OrderHistoryDTO(
 					order.getOrderId(),
 					order.getBook().getTitle(),
+					order.getBook().getImageUrl(),
 					getCoffeeName(order.getCoffee()),
+					order.getTotalPrice(),
 					order.getOrderTime()
 				)).toList();
 		

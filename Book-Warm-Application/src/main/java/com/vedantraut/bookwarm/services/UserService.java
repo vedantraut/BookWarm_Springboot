@@ -1,18 +1,14 @@
 package com.vedantraut.bookwarm.services;
 
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.vedantraut.bookwarm.dtos.UserDTO;
 import com.vedantraut.bookwarm.entity.Users;
 import com.vedantraut.bookwarm.exceptions.UserExistsException;
 import com.vedantraut.bookwarm.exceptions.UserNotFoundException;
 import com.vedantraut.bookwarm.repository.UserRepository;
-
-import jakarta.validation.Valid;
 
 @Service
 public class UserService {
@@ -64,5 +60,20 @@ public class UserService {
 		
 		
 		return "Access Success!";
+	}
+
+
+	public UserDTO getUserDetails(long userId) {
+		Users user = userrepository.findById(userId)
+				.orElseThrow(() -> new UserNotFoundException("User not found with id - "+userId));
+		
+		UserDTO userdto = new UserDTO();
+		
+		userdto.setUserId(userId);
+		userdto.setUserName(user.getUserName());
+		userdto.setEmail(user.getEmail());
+		userdto.setRole(user.getRole());
+		
+		return userdto;
 	}
 }
