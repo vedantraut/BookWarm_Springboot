@@ -1,15 +1,7 @@
 package com.vedantraut.bookwarm;
 
-import java.util.Arrays;
-
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import com.vedantraut.bookwarm.entity.Author;
-import com.vedantraut.bookwarm.entity.Book;
-import com.vedantraut.bookwarm.repository.AuthorRepository;
 
 @SpringBootApplication
 public class BookWarmApplication {
