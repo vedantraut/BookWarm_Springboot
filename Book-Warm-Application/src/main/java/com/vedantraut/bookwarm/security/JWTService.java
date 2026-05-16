@@ -25,9 +25,10 @@ public class JWTService {
 	public String SECRET_KEY;
 	
 	// Generate token
-	public String generateToken(String username) {
+	public String generateToken(String username, String role) {
 		
 		Map<String, Object> claims = new HashMap<>();
+		claims.put("role", role);
 		return createToken(claims, username);
 	}
 	
@@ -84,6 +85,10 @@ public class JWTService {
     // Check Expiration of token
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
+    }
+    
+    private String extractRole(String token) {
+    	return extractAllClaims(token).get("role", String.class);
     }
 
 }
