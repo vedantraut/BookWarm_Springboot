@@ -28,11 +28,9 @@ public class AuthorController {
 	AuthorService authorservice;
 	
 	@GetMapping("/getAllAuthors")
-	public ResponseEntity<List<Author>> getAllAuthors(){
+	public ResponseEntity<List<AuthorDTO>> getAllAuthors(){
 		
-//		return ResponseEntity.ok(authorservice.getAllAuthors());
-		
-		ResponseEntity<List<Author>> resp =  ResponseEntity.ok(authorservice.getAllAuthors());
+		ResponseEntity<List<AuthorDTO>> resp =  ResponseEntity.ok(authorservice.getAllAuthors());
 		System.out.println("Response status code while getting all the authors -- "+resp.getStatusCode());
 		
 		return resp;

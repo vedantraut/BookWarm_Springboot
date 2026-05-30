@@ -17,10 +17,42 @@ public class AuthorService {
 	@Autowired
 	AuthorRepository authorrepository;
 
-	public List<Author> getAllAuthors() {
+	public List<AuthorDTO> getAllAuthors() {
 		
 		List<Author> allAuthors = authorrepository.findAll();
-		return allAuthors;
+		
+		List<AuthorDTO> authordtos = new ArrayList<>();
+		
+		for(Author auth: allAuthors) {
+			AuthorDTO authordto = new AuthorDTO();
+			
+			authordto.setId(auth.getAuthorId());
+			authordto.setName(auth.getName());
+			authordto.setBio(auth.getBio());
+			
+			List<BookDTO> bookDtos = new ArrayList<>();
+			
+			for(Book book: auth.getBooks()) {
+				BookDTO bookDto = new BookDTO();
+				
+				bookDto.setId(book.getBookId());
+	            bookDto.setTitle(book.getTitle());
+	            bookDto.setPrice(book.getPrice());
+	            bookDto.setIsbn(book.getIsbn());
+	            bookDto.setAuthorName(auth.getName());
+	            bookDto.setImageUrl(book.getImageUrl());
+	            bookDto.setAuthor_id(auth.getAuthorId());
+
+	            bookDtos.add(bookDto);
+			}
+			
+			authordto.setBooks(bookDtos);
+
+			authordtos.add(authordto);
+						
+		}
+		
+		return authordtos;
 	}
 
 	public Author saveAuthor(AuthorDTO authordto) {

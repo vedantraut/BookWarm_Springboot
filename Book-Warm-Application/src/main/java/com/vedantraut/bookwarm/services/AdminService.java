@@ -71,9 +71,9 @@ public class AdminService {
 		
 		Author a = authorservice.saveAuthor(authordto);
 		
-		authordto.setId(authordto.getId());
+		authordto.setId(a.getAuthorId());
 		
-		return null;
+		return authordto;
 	}
 
 	public List<BookDTO> getBooks() {
@@ -89,11 +89,9 @@ public class AdminService {
 	}
 
 	public List<AuthorDTO> getAuthors() {
-//		List<AuthorDTO> authors = authorservice.getAllAuthors();
+		List<AuthorDTO> authors = authorservice.getAllAuthors();
 		
-//		return authors;
-		
-		return null;
+		return authors;
 	}
 	
 	
